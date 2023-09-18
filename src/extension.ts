@@ -1,24 +1,24 @@
 import * as vscode from 'vscode';
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 import {
-	initAuth,
-	createPayload,
-	validatePayload,
-	setNewAPIKey,
-	getFileExtension,
-	buildStatusBarItem,
-	Config,
-	OPENAI_API_KEY
+    initAuth,
+    createPayload,
+    validatePayload,
+    setNewAPIKey,
+    getFileExtension,
+    buildStatusBarItem,
+    Config,
+    OPENAI_API_KEY
 } from './utils';
 
 const COPY_OUTPUT = "Copy Output";
 
-const initOpenAI = (credentials: Config): OpenAIApi => {
-	const openaiConfig = new Configuration({
+const initOpenAI = (credentials: Config): OpenAI => {
+	
+
+	return new OpenAI({
 		...credentials
 	});
-
-	return new OpenAIApi(openaiConfig);
 };
 
 // This method is called when the extension is activated
@@ -79,9 +79,9 @@ ${selectedText}
 			deactivate();
 		};
 
-		const response = await openai.createCompletion({ ...payload });
+		const response = await openai.completions.create({ ...payload });
 
-		const output = response.data.choices[0].text?.trim();
+		const output = response.choices[0].text?.trim();
 
 		if(response.data.usage?.total_tokens && response.data.usage?.total_tokens >= payload.max_tokens) {
 			vscode.window.showErrorMessage(`The completion was ${response.data.usage?.total_tokens} tokens and exceeds your max_token value of ${payload.max_tokens}. Please increase your settings to allow for longer completions.`);
@@ -90,7 +90,7 @@ ${selectedText}
 		// Insert the text at the start of the selection
 
 		const doc = await vscode.workspace.openTextDocument({
-			content: response.data.choices[0].text?.trim(),
+			content: response.choices[0].text?.trim(),
 		  });		
 		await vscode.window.showTextDocument(doc);
 
@@ -135,9 +135,9 @@ Doc comments:
 			deactivate();
 		};
 
-		const response = await openai.createCompletion({ ...payload });
+		const response = await openai.completions.create({ ...payload });
 
-		const output = response.data.choices[0].text?.trim();
+		const output = response.choices[0].text?.trim();
 
 		if(response.data.usage?.total_tokens && response.data.usage?.total_tokens >= payload.max_tokens) {
 			vscode.window.showErrorMessage(`The completion was ${response.data.usage?.total_tokens} tokens and exceeds your max_token value of ${payload.max_tokens}. Please increase your settings to allow for longer completions.`);
@@ -191,9 +191,9 @@ Code:
 			deactivate();
 		};
 
-		const response = await openai.createCompletion({ ...payload });
+		const response = await openai.completions.create({ ...payload });
 
-		const output = response.data.choices[0].text?.trim();
+		const output = response.choices[0].text?.trim();
 
 		if(response.data.usage?.total_tokens && response.data.usage?.total_tokens >= payload.max_tokens) {
 			vscode.window.showErrorMessage(`The completion was ${response.data.usage?.total_tokens} tokens and exceeds your max_token value of ${payload.max_tokens}. Please increase your settings to allow for longer completions.`);
@@ -245,13 +245,13 @@ Suggested code:
 			deactivate();
 		};
 
-		const response = await openai.createCompletion({ ...payload });
+		const response = await openai.completions.create({ ...payload });
 
 		if(response.data.usage?.total_tokens && response.data.usage?.total_tokens >= payload.max_tokens) {
 			vscode.window.showErrorMessage(`The completion was ${response.data.usage?.total_tokens} tokens and exceeds your max_token value of ${payload.max_tokens}. Please increase your settings to allow for longer completions.`);
 		}
 
-		const output = response.data.choices[0].text?.trim() || "A response is not available right now.";
+		const output = response.choices[0].text?.trim() || "A response is not available right now.";
 
 		let items = [
 			{
@@ -298,13 +298,13 @@ Suggested code:
 			deactivate();
 		};
 
-		const response = await openai.createCompletion({ ...payload });
+		const response = await openai.completions.create({ ...payload });
 
 		if(response.data.usage?.total_tokens && response.data.usage?.total_tokens >= payload.max_tokens) {
 			vscode.window.showErrorMessage(`The completion was ${response.data.usage?.total_tokens} tokens and exceeds your max_token value of ${payload.max_tokens}. Please increase your settings to allow for longer completions.`);
 		}
 
-		const output = response.data.choices[0].text?.trim() || "A response is not available right now.";
+		const output = response.choices[0].text?.trim() || "A response is not available right now.";
 
 		let items = [
 			{
