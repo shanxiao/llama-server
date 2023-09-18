@@ -1,0 +1,169 @@
+{
+  "name": "Palantiri",
+  "displayName": "Palantiri",
+  "description": "Generate unit test code, documentation, code reviews, and more!",
+  "version": "0.12.0",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other",
+    "Machine Learning",
+    "Education",
+    "Testing",
+    "Debuggers"
+  ],
+  "keywords": [
+    "AI"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:GPT.createDocs",
+    "onCommand:GPT.suggestImprovement",
+    "onCommand:GPT.ask"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "GPT.createDocs",
+        "title": "Generate comment",
+        "icon": "$(hubot)"
+      },
+      {
+        "command": "GPT.createtest",
+        "title": "Generate test",
+        "icon": "$(pencil)"
+      },      
+      {
+        "command": "GPT.createCodeFromDocs",
+        "title": "Create code from comment",
+        "icon": "$(check)"
+      },
+      {
+        "command": "GPT.suggestImprovement",
+        "title": "Code Review",
+        "icon": "$(rocket)"
+      },
+      {
+        "command": "GPT.ask",
+        "title": "Palantíri",
+        "icon": "$(star)"
+      },
+      {
+        "command": "GPT.updateAPIKey",
+        "title": "Update Palantiri API Key",
+        "icon": "$(pencil)"
+      },
+      {
+        "command": "GPT.removeAPIKey",
+        "title": "Remove Palantiri API Key",
+        "icon": "$(error)"
+      }
+    ],
+    "configuration": {
+      "title": "Palantiri",
+      "properties": {
+        "GPT.org": {
+          "type": "string",
+          "default": null,
+          "markdownDescription": "The Palantiri"
+        },
+        "GPT.model": {
+          "type": "string",
+          "default": "text-davinci-003",
+          "markdownDescription": "The Codex model to use for text completions"
+        },
+        "GPT.maxTokens": {
+          "type": "number",
+          "default": 250,
+          "minimum": 1,
+          "markdownDescription": "The maximum number of tokens for each text request"
+        },
+        "GPT.temperature": {
+          "type": "number",
+          "default": 0.3,
+          "minimum": 0,
+          "maximum": 1,
+          "markdownDescription": "The temperature of each text request. Must be between 0 and 1"
+        },
+        "GPT.codeModel": {
+          "type": "string",
+          "default": "text-davinci-003",
+          "markdownDescription": "The Codex model to use for code completions"
+        },
+        "GPT.codeMaxTokens": {
+          "type": "number",
+          "default": 250,
+          "minimum": 1,
+          "markdownDescription": "The maximum number of tokens for each code request"
+        },
+        "GPT.codeTemperature": {
+          "type": "number",
+          "default": 0.1,
+          "minimum": 0,
+          "maximum": 1,
+          "markdownDescription": "The temperature of each code request. Must be between 0 and 1"
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "GPT.createDocs",
+        "key": "alt+ctrl+d",
+        "mac": "ctrl + ]",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "GPT.suggestImprovement",
+        "key": "alt+ctrl+i",
+        "mac": "ctrl + [",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "GPT.ask",
+        "key": "alt+ctrl+g",
+        "mac": "ctrl + '",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "GPT.createCodeFromDocs",
+        "key": "alt+ctrl+x",
+        "mac": "ctrl + \\",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.74.0",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "@vscode/test-electron": "^2.2.0",
+    "eslint": "^8.28.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.1.0",
+    "typescript": "^4.9.4"
+  },
+  "author": "Mike Bird",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "openai": "^3.1.0"
+  },
+  "pricing": "Free",
+  "publisher": "Shan",
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#D79D58"
+  }
+}
